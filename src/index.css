@@ -1,38 +1,237 @@
-.heading{
-  border: 1px solid black;
-  display: flex;
-  justify-content: space-between;
-}
-.nav-items >ul{
-display: flex;
-list-style-type: none;
+/* Modern Restaurant App Styling */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.nav-items >ul >li{
-  padding: 10px;
-  margin: 10px;
-  font-size: 28px;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
 }
-.logo{
-  width: 150px;
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.res-container{
-   display: flex;
-  flex-wrap: wrap;
+
+.logo-container {
+  display: flex;
+  align-items: center;
 }
-.res-card{
- margin: 5px;
-  width: 200px;
-  height: 400px;
-  padding: 5px;
+
+.logo {
+  width: 120px;
+  height: auto;
+  transition: transform 0.3s ease;
 }
-.res-card :hover{
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation Styles */
+.nav-items > ul {
+  display: flex;
+  list-style-type: none;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-items > ul > li {
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
   cursor: pointer;
-  border: 1px solid black;
+  transition: color 0.3s ease, transform 0.2s ease;
+  position: relative;
 }
-.res-logo{
+
+.nav-items > ul > li:hover {
+  color: #ff6b35;
+  transform: translateY(-2px);
+}
+
+.nav-items > ul > li::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #ff6b35;
+  transition: width 0.3s ease;
+}
+
+.nav-items > ul > li:hover::after {
   width: 100%;
 }
-.search{
-  padding: 10px;
+
+/* Body and Filter Section */
+.body {
+  padding: 2rem 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.Filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #ff6b35;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(255, 107, 53, 0.2);
+}
+
+.filter-btn:hover {
+  background-color: #ff5722;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
+}
+
+.filter-btn:active {
+  transform: translateY(0);
+}
+
+/* Restaurant Container */
+.res-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+/* Restaurant Card Styles */
+.res-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.res-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.res-logo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.res-card h3 {
+  padding: 1rem 1rem 0.5rem 1rem;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.res-card h4 {
+  padding: 0 1rem 0.5rem 1rem;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.res-card h4:last-child {
+  padding-bottom: 1rem;
+}
+
+/* Rating styling - target the rating h4 specifically */
+.res-card h4:nth-of-type(2) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: #48c479;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+  width: fit-content;
+  margin-left: 1rem;
+  font-size: 13px;
+}
+
+/* Search Box */
+.search {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .nav-items > ul {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-items > ul > li {
+    font-size: 14px;
+  }
+
+  .body {
+    padding: 1rem;
+  }
+
+  .res-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .Filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .res-container {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    width: 100px;
+  }
 }
