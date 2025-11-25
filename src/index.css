@@ -235,3 +235,46 @@ body {
     width: 100px;
   }
 }
+/* Shimmer Loader Container — matches res-container grid */
+.shimmer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+/* Shimmer Card — same shape as .res-card */
+.shimmer-cards {
+  height: 300px;
+  background: #e6e6e6;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer animation effect */
+.shimmer-cards::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  animation: shimmer 1.3s infinite;
+}
+
+/* Keyframes for smooth shimmer movement */
+@keyframes shimmer {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(350px);
+  }
+}
