@@ -1,30 +1,7 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import ShimmerDiv from "./Shimmer";
-
-// ✅ Defining the Restaurant data structure coming from API
-export interface Restaurant {
-  id: string;
-  name: string;
-  cloudinaryImageId?: string;
-  cuisines: string[];
-  avgRating?: number | string;
-  costForTwo: number;
-  sla?: {
-    deliveryTime?: number;
-  };
-}
-
-// ✅ Type for card wrapper structure returned by Swiggy API
-interface CardWrapper {
-  card?: {
-    card?: {
-      "@type"?: string;
-      info?: Restaurant;
-    };
-  };
-}
-
+import type{ Restaurant } from "../utils/MenuTypes";
 const Body = () => {
   // ✅ Stores full restaurant list (original data)
   const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([]);
@@ -40,20 +17,18 @@ const Body = () => {
     const fetchData = async () => {
       // ✅ Fetch Swiggy restaurants API
       const data = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.63270&lng=77.21980&collection=83633&tags=layout_CCS_NorthIndian&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
+        "https://foodfire.onrender.com/api/restaurants?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING"
       );
 
       const json = await data.json(); // ✅ Convert response to JSON
+      // console.log(json.data.cards);
 
       // ✅ Extract only restaurant info objects from response
-      const restaurants = (json.data.cards as CardWrapper[])
-        .filter((c) => c.card?.card?.["@type"]?.includes("Restaurant"))
-        .map((c) => c.card?.card?.info)
-        .filter((info): info is Restaurant => info !== undefined); // ✅ Ensures TypeScript type safety
+      
 
       // ✅ Store restaurants in state
-      setAllRestaurants(restaurants); // full list
-      setFilteredRestaurants(restaurants); // UI list
+      setAllRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); // full list
+      setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); // UI list
     };
 
     fetchData(); // ✅ Execute API call
@@ -109,6 +84,7 @@ const Body = () => {
 
       {/* ✅ Rendering restaurant cards on UI */}
       <div className="res-container">
+        {/* {console.log(filteredRestaurants)} */}
         {filteredRestaurants.map((restaurant) => (
           <RestaurantCard key={restaurant.id} resData={restaurant} />
         ))}
