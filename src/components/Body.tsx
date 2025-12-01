@@ -1,13 +1,16 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import ShimmerDiv from "./Shimmer";
-import type{ Restaurant } from "../utils/MenuTypes";
+import type { Restaurant } from "../utils/MenuTypes";
+import useOnlineStatus from "../utils/useOnlineStatus";
 const Body = () => {
   // ✅ Stores full restaurant list (original data)
   const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([]);
 
   // ✅ Stores searched/filtered restaurant list displayed on UI
-  const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>(
+    []
+  );
 
   // ✅ Stores search input field value
   const [searchText, setSearchText] = useState("");
@@ -24,18 +27,29 @@ const Body = () => {
       // console.log(json.data.cards);
 
       // ✅ Extract only restaurant info objects from response
-      
 
       // ✅ Store restaurants in state
-      setAllRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); // full list
-      setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); // UI list
+      setAllRestaurants(
+        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      ); // full list
+      setFilteredRestaurants(
+        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      ); // UI list
     };
 
     fetchData(); // ✅ Execute API call
   }, []); // ✅ Empty dependency → runs only once
-
+ const onlineStatus = useOnlineStatus();
+  if (onlineStatus == false) 
+    return (
+    <h1>Oops! looks like you are offline</h1>
+    );
   // ✅ Show shimmer (loading UI) while restaurants are being fetched
   if (allRestaurants.length === 0) return <ShimmerDiv />;
+
+ 
 
   return (
     <div className="body">

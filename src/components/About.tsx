@@ -1,7 +1,9 @@
-const About =() =>{
-    return (
+const About = () =>{
+    return(
         <div>
-            <h1>Hi this is my About page.</h1>
+            <h1>
+                About Section
+            </h1>
         </div>
     )
 }

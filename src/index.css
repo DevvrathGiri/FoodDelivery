@@ -251,6 +251,10 @@ body {
   position: relative;
   overflow: hidden;
 }
+.user-card {
+  margin: 10px;
+border: 1px solid black ;
+}
 
 /* Shimmer animation effect */
 .shimmer-cards::after {
