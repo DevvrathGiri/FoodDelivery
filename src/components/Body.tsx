@@ -3,75 +3,69 @@ import { useEffect, useState } from "react";
 import ShimmerDiv from "./Shimmer";
 import type { Restaurant } from "../utils/MenuTypes";
 import useOnlineStatus from "../utils/useOnlineStatus";
-const Body = () => {
-  // ✅ Stores full restaurant list (original data)
-  const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([]);
 
-  // ✅ Stores searched/filtered restaurant list displayed on UI
+const Body = () => {
+  const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>(
     []
   );
-
-  // ✅ Stores search input field value
   const [searchText, setSearchText] = useState("");
 
-  // ✅ Runs only once on component mount — fetches data from API
   useEffect(() => {
     const fetchData = async () => {
-      // ✅ Fetch Swiggy restaurants API
       const data = await fetch(
         "https://foodfire.onrender.com/api/restaurants?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING"
       );
 
-      const json = await data.json(); // ✅ Convert response to JSON
-      // console.log(json.data.cards);
+      const json = await data.json();
 
-      // ✅ Extract only restaurant info objects from response
+      const restaurants =
+        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants || [];
 
-      // ✅ Store restaurants in state
-      setAllRestaurants(
-        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      ); // full list
-      setFilteredRestaurants(
-        json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      ); // UI list
+      setAllRestaurants(restaurants);
+      setFilteredRestaurants(restaurants);
     };
 
-    fetchData(); // ✅ Execute API call
-  }, []); // ✅ Empty dependency → runs only once
- const onlineStatus = useOnlineStatus();
-  if (onlineStatus == false) 
+    fetchData();
+  }, []);
+
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus === false)
     return (
-    <h1>Oops! looks like you are offline</h1>
+      <h1 className="text-center mt-10 text-xl font-semibold text-red-600">
+        Oops! Looks like you are offline ❌
+      </h1>
     );
-  // ✅ Show shimmer (loading UI) while restaurants are being fetched
+
   if (allRestaurants.length === 0) return <ShimmerDiv />;
 
- 
-
   return (
-    <div className="body">
-      <div className="Filter">
-        {/* ✅ Controlled input field for search */}
+    <div className="p-6 max-w-6xl mx-auto">
+      {/* SEARCH + FILTER SECTION */}
+      <div className="flex flex-col sm:flex-row gap-4 mb-6 items-center">
         <input
           type="text"
-          className="search-box"
+          className="
+            border border-gray-300 rounded-lg px-4 py-2 
+            w-full sm:w-1/2 
+            focus:outline-none focus:ring-2 focus:ring-blue-500
+          "
+          placeholder="Search restaurants..."
           value={searchText}
           onChange={(e) => {
             const value = e.target.value;
-            setSearchText(value); // ✅ Update search state
+            setSearchText(value);
 
-            // ✅ Reset list if search box becomes empty
-            if (value === "") {
-              setFilteredRestaurants(allRestaurants);
-            }
+            if (value === "") setFilteredRestaurants(allRestaurants);
           }}
         />
 
-        {/* ✅ Search button — filters based on restaurant name */}
         <button
+          className="
+            bg-blue-600 text-white px-4 py-2 rounded-lg 
+            hover:bg-blue-700 transition
+          "
           onClick={() => {
             const filtered = allRestaurants.filter((res) =>
               res.name.toLowerCase().includes(searchText.toLowerCase())
@@ -82,9 +76,11 @@ const Body = () => {
           Search
         </button>
 
-        {/* ✅ Top-rated filter — shows restaurants above 4.3 rating */}
         <button
-          className="filter-btn"
+          className="
+            bg-green-600 text-white px-4 py-2 rounded-lg 
+            hover:bg-green-700 transition
+          "
           onClick={() => {
             const filtered = allRestaurants.filter(
               (res) => Number(res.avgRating) > 4.3
@@ -92,13 +88,17 @@ const Body = () => {
             setFilteredRestaurants(filtered);
           }}
         >
-          Top rated restaurants
+          Top Rated ⭐
         </button>
       </div>
 
-      {/* ✅ Rendering restaurant cards on UI */}
-      <div className="res-container">
-        {/* {console.log(filteredRestaurants)} */}
+      {/* RESTAURANTS GRID */}
+      <div
+        className="
+          grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 
+          gap-6
+        "
+      >
         {filteredRestaurants.map((restaurant) => (
           <RestaurantCard key={restaurant.id} resData={restaurant} />
         ))}

@@ -8,44 +8,76 @@ const Header = () => {
   const onlineStatus = useOnlineStatus();
 
   return (
-    <div className="header">
-      <div className="logo-container">
-        <img src={LOGO_URL} alt="App Logo" className="logo" />
+    <header className="flex items-center justify-between px-6 py-4 shadow-md bg-white">
+      {/* LOGO */}
+      <div className="flex items-center">
+        <img
+          src={LOGO_URL}
+          alt="App Logo"
+          className="w-20 h-auto object-contain"
+        />
       </div>
-      <div className="nav-items">
-        <ul>
-          <li>
-            Online Status : {onlineStatus ? "🟢" : "🔴"}
+
+      {/* NAV LINKS */}
+      <nav>
+        <ul className="flex items-center gap-6 text-lg font-medium">
+          <li className="text-gray-700">
+            Online Status: {onlineStatus ? "🟢" : "🔴"}
           </li>
+
           <li>
-            <Link to="/home">Home</Link>
+            <Link
+              to="/home"
+              className="hover:text-blue-600 transition"
+            >
+              Home
+            </Link>
           </li>
+
           <li>
-            <Link to="/About">About Us</Link>
+            <Link
+              to="/About"
+              className="hover:text-blue-600 transition"
+            >
+              About Us
+            </Link>
           </li>
+
           <li>
-            <Link to="/Contact">Contact Us</Link>
+            <Link
+              to="/Contact"
+              className="hover:text-blue-600 transition"
+            >
+              Contact Us
+            </Link>
           </li>
+
           <li>
-            <Link to="/Grocery">Grocery</Link>
+            <Link
+              to="/Grocery"
+              className="hover:text-blue-600 transition"
+            >
+              Grocery
+            </Link>
           </li>
+
           <li>
-            <Link to="/Cart">Cart</Link>
+            <Link
+              to="/Cart"
+              className="hover:text-blue-600 transition"
+            >
+              Cart
+            </Link>
           </li>
-          {/* <button
-            className="login"
-            onClick={() => {
-              if (btnNameReact === "Login") {
-                setbtnNameReact("Logout");
-              } else {
-                setbtnNameReact("Login");
-              }
-            }}
-          >
-            {btnNameReact}
-          </button> */}
+
+          {/* LOGIN BUTTON */}
           <button
-            className="login"
+            className="
+              px-4 py-2 
+              bg-blue-600 text-white rounded-lg 
+              hover:bg-blue-700 
+              transition
+            "
             onClick={() =>
               setbtnNameReact((prev) => (prev === "Login" ? "Logout" : "Login"))
             }
@@ -53,8 +85,8 @@ const Header = () => {
             {btnNameReact}
           </button>
         </ul>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 
