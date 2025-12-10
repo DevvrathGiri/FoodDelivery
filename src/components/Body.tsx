@@ -1,3 +1,4 @@
+// Body.tsx
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import ShimmerDiv from "./Shimmer";
@@ -41,71 +42,60 @@ const Body = () => {
   if (allRestaurants.length === 0) return <ShimmerDiv />;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      {/* SEARCH + FILTER SECTION */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-6 items-center">
-        <input
-          type="text"
-          className="
-            border border-gray-300 rounded-lg px-4 py-2 
-            w-full sm:w-1/2 
-            focus:outline-none focus:ring-2 focus:ring-blue-500
-          "
-          placeholder="Search restaurants..."
-          value={searchText}
-          onChange={(e) => {
-            const value = e.target.value;
-            setSearchText(value);
+    <main className="bg-slate-50 min-h-screen">
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        {/* SEARCH + FILTER SECTION */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-8 items-center justify-between">
+          <div className="flex w-full sm:w-auto gap-3">
+            <input
+              type="text"
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full sm:w-72 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              placeholder="Search restaurants..."
+              value={searchText}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSearchText(value);
 
-            if (value === "") setFilteredRestaurants(allRestaurants);
-          }}
-        />
+                if (value === "") setFilteredRestaurants(allRestaurants);
+              }}
+            />
 
-     <button
-  className="
-    bg-blue-600 text-white px-4 py-2 rounded-lg 
-    hover:bg-blue-700 transition
-  "
-  onClick={() => {
-    const filtered = allRestaurants.filter((res) =>
-      res?.info?.name?.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setFilteredRestaurants(filtered);
-  }}
->
-  Search
-</button>
+            <button
+              className="whitespace-nowrap bg-blue-600 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-blue-700 active:scale-[0.98] transition-all text-sm"
+              onClick={() => {
+                const filtered = allRestaurants.filter((res) =>
+                  res?.info?.name
+                    ?.toLowerCase()
+                    .includes(searchText.toLowerCase())
+                );
+                setFilteredRestaurants(filtered);
+              }}
+            >
+              Search
+            </button>
+          </div>
 
+          <button
+            className="w-full sm:w-auto bg-green-600 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-green-700 active:scale-[0.98] transition-all text-sm"
+            onClick={() => {
+              const filtered = allRestaurants.filter(
+                (res) => Number(res?.info?.avgRating) > 4.3
+              );
+              setFilteredRestaurants(filtered);
+            }}
+          >
+            Top Rated ⭐
+          </button>
+        </div>
 
-      <button
-  className="
-    bg-green-600 text-white px-4 py-2 rounded-lg 
-    hover:bg-green-700 transition
-  "
-  onClick={() => {
-    const filtered = allRestaurants.filter(
-      (res) => Number(res?.info?.avgRating) > 4.3
-    );
-    setFilteredRestaurants(filtered);
-  }}
->
-  Top Rated ⭐
-</button>
-
+        {/* RESTAURANTS GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {filteredRestaurants.map((restaurant) => (
+            <RestaurantCard key={restaurant.id} resData={restaurant} />
+          ))}
+        </div>
       </div>
-
-      {/* RESTAURANTS GRID */}
-      <div
-        className="
-          grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 
-          gap-6
-        "
-      >
-        {filteredRestaurants.map((restaurant) => (
-          <RestaurantCard key={restaurant.id} resData={restaurant} />
-        ))}
-      </div>
-    </div>
+    </main>
   );
 };
 
