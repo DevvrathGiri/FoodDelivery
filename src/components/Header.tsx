@@ -15,13 +15,14 @@ const Header = () => {
   return (
     <header className="flex items-center justify-between px-6 py-4 shadow-md bg-white">
       {/* LOGO */}
-      <div className="flex items-center">
-        <img
-          src={LOGO_URL}
-          alt="App Logo"
-          className="w-20 h-auto object-contain"
-        />
-      </div>
+     <div className="flex items-center">
+  <img
+    src={LOGO_URL}
+    alt="App Logo"
+    className="w-24 h-24 object-cover rounded-xl shadow-md border border-gray-200 hover:scale-105 transition-transform"
+  />
+</div>
+
 
       {/* NAV LINKS */}
       <nav>
@@ -30,14 +31,15 @@ const Header = () => {
             Online Status: {onlineStatus ? "🟢" : "🔴"}
           </li>
 
-          <li>
-            <Link
-              to="/home"
-              className="hover:text-blue-600 transition"
-            >
-              Home
-            </Link>
-          </li>
+        <li>
+  <Link
+    to="/"
+    className="hover:text-blue-600 transition"
+  >
+    Home
+  </Link>
+</li>
+
 
           <li>
             <Link

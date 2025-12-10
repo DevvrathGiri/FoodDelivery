@@ -61,35 +61,37 @@ const Body = () => {
           }}
         />
 
-        <button
-          className="
-            bg-blue-600 text-white px-4 py-2 rounded-lg 
-            hover:bg-blue-700 transition
-          "
-          onClick={() => {
-            const filtered = allRestaurants.filter((res) =>
-              res.name.toLowerCase().includes(searchText.toLowerCase())
-            );
-            setFilteredRestaurants(filtered);
-          }}
-        >
-          Search
-        </button>
+     <button
+  className="
+    bg-blue-600 text-white px-4 py-2 rounded-lg 
+    hover:bg-blue-700 transition
+  "
+  onClick={() => {
+    const filtered = allRestaurants.filter((res) =>
+      res?.info?.name?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredRestaurants(filtered);
+  }}
+>
+  Search
+</button>
 
-        <button
-          className="
-            bg-green-600 text-white px-4 py-2 rounded-lg 
-            hover:bg-green-700 transition
-          "
-          onClick={() => {
-            const filtered = allRestaurants.filter(
-              (res) => Number(res.avgRating) > 4.3
-            );
-            setFilteredRestaurants(filtered);
-          }}
-        >
-          Top Rated ⭐
-        </button>
+
+      <button
+  className="
+    bg-green-600 text-white px-4 py-2 rounded-lg 
+    hover:bg-green-700 transition
+  "
+  onClick={() => {
+    const filtered = allRestaurants.filter(
+      (res) => Number(res?.info?.avgRating) > 4.3
+    );
+    setFilteredRestaurants(filtered);
+  }}
+>
+  Top Rated ⭐
+</button>
+
       </div>
 
       {/* RESTAURANTS GRID */}
