@@ -1,4 +1,5 @@
 import { CDN_URL } from "../utils/constants";
+
 const ItemList = ({ items }) => {
   return (
     <div className="flex flex-col gap-3 py-3">
@@ -10,15 +11,9 @@ const ItemList = ({ items }) => {
             key={info?.id}
             className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all"
           >
-            <div className="flex gap-4">
-              {/* Dish Image */}
-              <img
-                src={CDN_URL + info?.imageId}
-                alt={info?.name}
-                className="w-20 h-20 object-cover rounded-lg"
-              />
-
-              {/* Text Content */}
+            <div className="flex justify-between items-start gap-4">
+              
+              {/* LEFT SIDE — TEXT */}
               <div className="flex-1">
                 <div className="flex justify-between items-center">
                   <span className="text-base font-semibold text-gray-900">
@@ -34,6 +29,24 @@ const ItemList = ({ items }) => {
                   {info?.description}
                 </p>
               </div>
+
+              {/* RIGHT SIDE — IMAGE + BUTTON */}
+              <div className="relative">
+                
+                <img
+                  src={CDN_URL + info?.imageId}
+                  alt={info?.name}
+                  className="w-24 h-24 object-cover rounded-lg"
+                />
+
+                {/* Button positioned on image */}
+                <button
+                  className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg bg-black text-white shadow-lg text-xs"
+                >
+                  Add+
+                </button>
+              </div>
+
             </div>
           </div>
         );
