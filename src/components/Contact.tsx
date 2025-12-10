@@ -10,7 +10,8 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e) => {
+ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
     e.preventDefault();
 
     // Show popup
@@ -90,7 +91,7 @@ const Contact = () => {
             />
 
             <textarea
-              rows="4"
+              rows={4}
               placeholder="Your Message"
               value={formData.message}
               onChange={(e) =>

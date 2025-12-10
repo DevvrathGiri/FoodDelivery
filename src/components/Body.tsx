@@ -2,14 +2,25 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import ShimmerDiv from "./Shimmer";
-import type { Restaurant } from "../utils/MenuTypes";
+// import type { Restaurant } from "../utils/MenuTypes";
 import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
-  const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([]);
-  const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>(
-    []
-  );
+ type ApiRestaurant = {
+  info: {
+    id: string;
+    name: string;
+    cuisines: string[];
+    cloudinaryImageId?: string;
+    avgRating?: number | string;
+    costForTwo: number;
+    sla?: { deliveryTime?: number };
+  };
+};
+
+const [allRestaurants, setAllRestaurants] = useState<ApiRestaurant[]>([]);
+const [filteredRestaurants, setFilteredRestaurants] = useState<ApiRestaurant[]>([]);
+
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {

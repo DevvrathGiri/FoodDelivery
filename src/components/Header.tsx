@@ -2,13 +2,15 @@ import { useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../utils/hooks";
 
 const Header = () => {
   const [btnNameReact, setbtnNameReact] = useState("Login");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const onlineStatus = useOnlineStatus();
-  const cartItems = useSelector((store) => store.cart.items);
+
+  const cartItems = useAppSelector((store) => store.cart.items);
+
 
   return (
     <header className="bg-white/90 backdrop-blur border-b border-gray-100 sticky top-0 z-20">

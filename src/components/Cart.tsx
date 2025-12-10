@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import ItemList from "./ItemList";
 import { clearCart } from "../utils/cartSlice";
+import type { RootState } from "../utils/appStore";
 
 const Cart = () => {
-  const cartItems = useSelector((store) => store.cart.items);
+  const cartItems = useSelector((store: RootState) => store.cart.items);
   const dispatch = useDispatch();
 
   const handleClearCart = () => {
