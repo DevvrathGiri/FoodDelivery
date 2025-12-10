@@ -9,7 +9,7 @@ interface CartState {
 }
 
 const initialState: CartState = {
-  items: [],
+  items: ["buregr","pizza"],
 };
 
 const cartSlice = createSlice({
