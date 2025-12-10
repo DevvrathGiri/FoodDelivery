@@ -1,4 +1,12 @@
 // ----------------------------------------------------
+// Placeholder / helper types (fixes missing type errors)
+// ----------------------------------------------------
+export type HeaderStyling = any;
+export type Tab = any;
+export type Layout = any;
+export type GridElements = any;
+
+// ----------------------------------------------------
 // Root Response
 // ----------------------------------------------------
 export interface Root {
@@ -35,7 +43,7 @@ export interface Card3 {
   text?: string;
   headerStyling?: HeaderStyling;
   tabs?: Tab[];
-  info?: Info;                     // Restaurant Info
+  info?: Info; // Restaurant Info
   layout?: Layout;
   id?: string;
   gridElements?: GridElements;
@@ -199,8 +207,8 @@ export interface Card5 {
 export interface Card6 {
   "@type": string;
   title?: string;
-  categories?: Category[];         // Category based items
-  itemCards?: ItemCard2[];         // ItemCategory based items
+  categories?: Category[]; // Category based items
+  itemCards?: ItemCard2[]; // ItemCategory based items
   image?: string;
   categoryId?: string;
 }
@@ -220,7 +228,7 @@ export interface ItemCard {
 
 export interface Card7 {
   "@type": string;
-  info: Info5;                     // Dish Type 1
+  info: Info5; // Dish Type 1
   hideRestaurantDetails: boolean;
 }
 
@@ -237,7 +245,7 @@ export interface Info5 {
   itemAttribute: ItemAttribute2;
   type: string;
   isBestseller?: boolean;
-  ratings?: Ratings;               // Ratings type 1
+  ratings?: Ratings; // Ratings type 1
   parentId: string;
 }
 
@@ -279,7 +287,7 @@ export interface ItemCard2 {
 
 export interface Card8 {
   "@type": string;
-  info: Info6;                    // Dish Type 2
+  info: Info6; // Dish Type 2
   hideRestaurantDetails: boolean;
 }
 
@@ -294,7 +302,7 @@ export interface Info6 {
   price: number;
   itemAttribute: ItemAttribute3;
   type: string;
-  ratings: Ratings2;              // Ratings type 2
+  ratings: Ratings2; // Ratings type 2
   parentId: string;
 }
 
@@ -351,6 +359,8 @@ export interface Restaurant {
     deliveryTime?: number;
   };
 }
+
+// Single Restaurant list item wrapper
 export interface RestaurantListItem {
   info: {
     id: string;
@@ -365,21 +375,9 @@ export interface RestaurantListItem {
   };
 }
 
-// ⭐ Add THIS helper type:
+// ⭐ Helper type
 export type FlatRestaurant = RestaurantListItem["info"];
-export interface RestaurantListItem {
-  info: {
-    id: string;
-    name: string;
-    cloudinaryImageId?: string;
-    cuisines: string[];
-    avgRating?: number | string;
-    costForTwo: number;
-    sla?: {
-      deliveryTime?: number;
-    };
-  };
-}
+
 export type RestaurantCardProps = {
   resData: {
     id: string;
@@ -393,5 +391,3 @@ export type RestaurantCardProps = {
     };
   };
 };
-
-

@@ -2,19 +2,22 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartSlice";
 import { CDN_URL } from "../utils/constants";
 import { useState } from "react";
+import type { ItemCard2 } from "../utils/MenuTypes";
 
-const ItemList = ({ items }) => {
+type ItemListProps = {
+  items: any[]; // You can refine later
+};
+
+const ItemList = ({ items }: ItemListProps) => {
   const dispatch = useDispatch();
 
-  // 👉 Track which items are added
-  const [addedItems, setAddedItems] = useState({});
+  const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
 
-  const handleAddItem = (item) => {
+  const handleAddItem = (item: any) => {
     const info = item?.card?.info || item;
 
-    dispatch(addItem(item)); // your existing logic ❗ NOT touched
+    dispatch(addItem(item));
 
-    // update UI only
     setAddedItems((prev) => ({
       ...prev,
       [info?.id]: true,
@@ -25,8 +28,7 @@ const ItemList = ({ items }) => {
     <div className="flex flex-col gap-3 py-3">
       {items?.map((item, index) => {
         const info = item?.card?.info || item;
-
-        const isAdded = addedItems[info?.id]; // check status
+        const isAdded = addedItems[info?.id];
 
         return (
           <div
@@ -34,27 +36,18 @@ const ItemList = ({ items }) => {
             className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-all"
           >
             <div className="flex justify-between items-start gap-4">
-              
-              {/* LEFT SIDE — TEXT */}
               <div className="flex-1">
                 <div className="flex justify-between items-center">
-                  <span className="text-base font-semibold text-gray-900">
-                    {info?.name}
-                  </span>
-
+                  <span className="text-base font-semibold">{info?.name}</span>
                   <span className="text-sm font-semibold text-green-600">
                     ₹{(info?.price || info?.defaultPrice || 0) / 100}
                   </span>
                 </div>
 
-                <p className="mt-1 text-sm text-gray-600 leading-snug">
-                  {info?.description}
-                </p>
+                <p className="mt-1 text-sm text-gray-600">{info?.description}</p>
               </div>
 
-              {/* RIGHT SIDE — IMAGE + BUTTON */}
               <div className="relative">
-
                 {info?.imageId && (
                   <img
                     src={CDN_URL + info.imageId}
@@ -63,18 +56,16 @@ const ItemList = ({ items }) => {
                   />
                 )}
 
-                {/* 👉 Toggle Button */}
                 <button
-                  className={`absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg shadow-lg text-xs 
-                    ${isAdded ? "bg-green-600 text-white" : "bg-black text-white"}
-                  `}
+                  className={`absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg shadow-lg text-xs ${
+                    isAdded ? "bg-green-600" : "bg-black"
+                  } text-white`}
                   onClick={() => handleAddItem(item)}
-                  disabled={isAdded} // optional (prevents double-add)
+                  disabled={isAdded}
                 >
                   {isAdded ? "Added ✓" : "Add+"}
                 </button>
               </div>
-
             </div>
           </div>
         );
