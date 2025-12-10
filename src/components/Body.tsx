@@ -21,6 +21,7 @@ const Body = () => {
 const [allRestaurants, setAllRestaurants] = useState<ApiRestaurant[]>([]);
 const [filteredRestaurants, setFilteredRestaurants] = useState<ApiRestaurant[]>([]);
 
+
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
@@ -102,7 +103,7 @@ const [filteredRestaurants, setFilteredRestaurants] = useState<ApiRestaurant[]>(
         {/* RESTAURANTS GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredRestaurants.map((restaurant) => (
-            <RestaurantCard key={restaurant.id} resData={restaurant} />
+            <RestaurantCard key={restaurant.info.id} resData={restaurant} />
           ))}
         </div>
       </div>

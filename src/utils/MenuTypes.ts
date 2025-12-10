@@ -348,17 +348,20 @@ export interface Relevance2 {
 // ----------------------------------------------------
 // Restaurant list API (used in Body.tsx)
 // ----------------------------------------------------
-export interface Restaurant {
-  id: string;
-  name: string;
-  cloudinaryImageId?: string;
-  cuisines: string[];
-  avgRating?: number | string;
-  costForTwo: number;
-  sla?: {
-    deliveryTime?: number;
+export interface ApiRestaurant {
+  info: {
+    id: string;
+    name: string;
+    cloudinaryImageId?: string;
+    cuisines: string[];
+    avgRating?: number | string;
+    costForTwo: number;
+    sla?: {
+      deliveryTime?: number;
+    };
   };
 }
+
 
 // Single Restaurant list item wrapper
 export interface RestaurantListItem {

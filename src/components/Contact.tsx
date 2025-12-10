@@ -120,7 +120,8 @@ const Contact = () => {
   width="100%"
   height="300"
   loading="lazy"
-  allowFullScreen=""
+  allowFullScreen={true}
+
   className="border-0 w-full"
 ></iframe>
 
