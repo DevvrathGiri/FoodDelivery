@@ -46,14 +46,17 @@ const RestaurantMenu = () => {
 
         {/* CATEGORY ACCORDIONS */}
         <section className="space-y-4">
-          {categories.map((category: any, index: number) => (
-            <RestaurantCategory
-              key={category?.card?.card?.title || index}
-              data={category?.card?.card}
-              showItems={showIndex === index}
-              setShowIndex={() => setShowIndex(index)}
-            />
-          ))}
+        {categories.map((category: any, index: number) => (
+  <RestaurantCategory
+    key={category?.card?.card?.title || index}
+    data={category?.card?.card}
+    showItems={showIndex === index}
+    setShowIndex={() => 
+      setShowIndex(showIndex === index ? null : index) // ⭐ TOGGLE LOGIC
+    }
+  />
+))}
+
         </section>
 
       </div>
