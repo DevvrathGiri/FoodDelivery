@@ -25,7 +25,7 @@ const Cart = () => {
 
           <button
             onClick={handleClearCart}
-            className="px-4 py-2 bg-red-500 text-white text-sm rounded-lg shadow hover:bg-red-600 transition-all"
+            className="px-4 py-2 bg-red-500 text-white text-sm rounded-lg shadow hover:bg-red-600 transition-all cursor-pointer"
           >
             Clear Cart
           </button>

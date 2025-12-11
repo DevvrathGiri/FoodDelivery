@@ -20,9 +20,10 @@ const Body = () => {
   const [allRestaurants, setAllRestaurants] = useState<ApiRestaurant[]>([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState<ApiRestaurant[]>([]);
   const [searchText, setSearchText] = useState("");
-  const [loading, setLoading] = useState(true); // ⭐ NEW
+  const [loading, setLoading] = useState(true);
+  const [isTopRated, setIsTopRated] = useState(false);
 
-  // FETCH RESTAURANTS
+  // ⭐ FETCH RESTAURANTS
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,7 +33,6 @@ const Body = () => {
 
         const json = await data.json();
 
-        // Find correct card
         const resCard = json?.data?.cards?.find(
           (c: any) => c?.card?.card?.gridElements?.infoWithStyle?.restaurants
         );
@@ -46,13 +46,26 @@ const Body = () => {
         console.error(err);
       }
 
-      setLoading(false); // ⭐ STOP shimmer
+      setLoading(false);
     };
 
     fetchData();
   }, []);
 
-  // CHECK ONLINE STATUS
+  // ⭐ HOME RESET EVENT LISTENER
+  useEffect(() => {
+    const resetHandler = () => {
+      setSearchText("");
+      setFilteredRestaurants(allRestaurants);
+      setIsTopRated(false);
+    };
+
+    window.addEventListener("resetHome", resetHandler);
+
+    return () => window.removeEventListener("resetHome", resetHandler);
+  }, [allRestaurants]);
+
+  // ⭐ CHECK ONLINE STATUS
   const onlineStatus = useOnlineStatus();
   if (!onlineStatus) {
     return (
@@ -62,12 +75,12 @@ const Body = () => {
     );
   }
 
-  // ⭐ SHOW SHIMMER AS FULL BODY PAGE
+  // ⭐ SHOW SHIMMER WHILE LOADING
   if (loading) {
     return (
       <main className="bg-slate-50 min-h-screen">
         <div className="max-w-6xl mx-auto px-6 py-8">
-          <ShimmerDiv />  {/* ⭐ Shimmer now fills the Body layout */}
+          <ShimmerDiv />
         </div>
       </main>
     );
@@ -81,6 +94,7 @@ const Body = () => {
         <div className="flex flex-col sm:flex-row gap-4 mb-8 items-center justify-between">
           <div className="flex w-full sm:w-auto gap-3">
 
+            {/* SEARCH INPUT */}
             <input
               type="text"
               className="border border-gray-300 rounded-lg px-4 py-2 w-full sm:w-72 bg-white shadow-sm 
@@ -94,6 +108,7 @@ const Body = () => {
               }}
             />
 
+            {/* SEARCH BUTTON */}
             <button
               className="whitespace-nowrap bg-blue-600 text-white px-4 py-2 rounded-lg shadow-sm 
                          hover:bg-blue-700 active:scale-[0.98] transition-all text-sm"
@@ -108,21 +123,34 @@ const Body = () => {
             </button>
           </div>
 
-          <button
-            className="w-full sm:w-auto bg-green-600 text-white px-4 py-2 rounded-lg shadow-sm 
-                       hover:bg-green-700 active:scale-[0.98] transition-all text-sm"
-            onClick={() => {
-              const filtered = allRestaurants.filter(
-                (res) => Number(res?.info?.avgRating) > 4.3
-              );
-              setFilteredRestaurants(filtered);
-            }}
-          >
-            Top Rated ⭐
-          </button>
+          {/* ⭐ TOP RATED TOGGLE BUTTON */}
+<button
+  className={`w-full sm:w-auto px-4 py-2 rounded-lg shadow-sm text-sm transition-all
+             ${
+               isTopRated
+                 ? "bg-blue-600 text-white hover:bg-blue-700"   // ⭐ SHOW ALL (active)
+                 : "bg-blue-600 text-white hover:bg-blue-700" // ⭐ TOP RATED (inactive)
+             }
+            `}
+  onClick={() => {
+    if (isTopRated) {
+      setFilteredRestaurants(allRestaurants);
+      setIsTopRated(false);
+    } else {
+      const filtered = allRestaurants.filter(
+        (res) => Number(res?.info?.avgRating) > 4.3
+      );
+      setFilteredRestaurants(filtered);
+      setIsTopRated(true);
+    }
+  }}
+>
+  {isTopRated ? "Show All" : "Top Rated ⭐"}
+</button>
+
         </div>
 
-        {/* RESTAURANTS GRID */}
+        {/* RESTAURANT CARDS GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredRestaurants.map((restaurant) => (
             <RestaurantCard key={restaurant.info.id} resData={restaurant} />

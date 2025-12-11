@@ -11,17 +11,28 @@ const Header = () => {
 
   const cartItems = useAppSelector((store) => store.cart.items);
 
+  // ⭐ Reset Home Event (Body listens to this)
+  const handleHomeClick = () => {
+    window.dispatchEvent(new Event("resetHome"));
+  };
 
   return (
     <header className="bg-white/90 backdrop-blur border-b border-gray-100 sticky top-0 z-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+
         {/* LOGO + title */}
         <div className="flex items-center gap-3">
           <img
             src={LOGO_URL}
             alt="App Logo"
-            className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-xl shadow-md border border-gray-200 hover:scale-105 transition-transform"
+            className="
+              w-14 h-14 sm:w-16 sm:h-16
+              object-cover rounded-2xl
+              shadow-md border border-gray-200
+              overflow-hidden bg-white
+            "
           />
+
           <div className="hidden sm:block">
             <p className="text-sm font-semibold text-gray-800 tracking-wide">
               Tasty Restaurant
@@ -40,26 +51,35 @@ const Header = () => {
               </span>
             </li>
 
+            {/* ⭐ HOME RESET FIX */}
             <li>
-              <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">
+              <Link
+                to="/"
+                onClick={handleHomeClick}
+                className="text-gray-700 hover:text-blue-600 transition-colors"
+              >
                 Home
               </Link>
             </li>
+
             <li>
               <Link to="/About" className="text-gray-700 hover:text-blue-600 transition-colors">
                 About Us
               </Link>
             </li>
+
             <li>
               <Link to="/Contact" className="text-gray-700 hover:text-blue-600 transition-colors">
                 Contact Us
               </Link>
             </li>
+
             <li>
               <Link to="/Grocery" className="text-gray-700 hover:text-blue-600 transition-colors">
                 Grocery
               </Link>
             </li>
+
             <li>
               <Link
                 to="/Cart"
@@ -106,15 +126,21 @@ const Header = () => {
         <div className="md:hidden border-t border-gray-100 bg-white/95 backdrop-blur">
           <nav className="max-w-6xl mx-auto px-4 sm:px-6 py-3">
             <ul className="flex flex-col gap-3 text-sm font-medium">
+
+              {/* ⭐ HOME RESET FIX (MOBILE) */}
               <li>
                 <Link
                   to="/"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    handleHomeClick();
+                  }}
                   className="block py-1 text-gray-700 hover:text-blue-600"
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   Home
                 </Link>
               </li>
+
               <li>
                 <Link
                   to="/About"
@@ -124,6 +150,7 @@ const Header = () => {
                   About Us
                 </Link>
               </li>
+
               <li>
                 <Link
                   to="/Contact"
@@ -133,6 +160,7 @@ const Header = () => {
                   Contact Us
                 </Link>
               </li>
+
               <li>
                 <Link
                   to="/Grocery"
@@ -142,6 +170,7 @@ const Header = () => {
                   Grocery
                 </Link>
               </li>
+
               <li>
                 <Link
                   to="/Cart"
@@ -151,6 +180,7 @@ const Header = () => {
                   Cart ({cartItems.length} items)
                 </Link>
               </li>
+
               <li>
                 <button
                   className="mt-1 w-full px-4 py-2 bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 active:scale-[0.98] transition-all text-sm"

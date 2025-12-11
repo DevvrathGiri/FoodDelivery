@@ -105,21 +105,21 @@ const ItemList = ({ items, isCart }: ItemListProps) => {
 
               {/* ⭐ CART PAGE → quantity controls */}
               {isCart ? (
-                <div className="mt-2 flex items-center gap-6 px-4 py-1 border border-green-600 rounded-lg shadow">
+                <div className="mt-2 flex items-center gap-6 px-4 py-1 border border-green-600 rounded-lg shadow cursor-pointer">
 
                   <button
-                    className="text-xl font-bold text-green-600"
+                    className="text-xl font-bold text-green-600 cursor-pointer"
                     onClick={() => dispatch(decreaseQty(info.id))}
                   >
                     −
                   </button>
 
-                  <span className="text-green-700 font-semibold text-lg">
+                  <span className="text-green-700 font-semibold text-lg cursor-pointer">
                     {info.quantity}
                   </span>
 
                   <button
-                    className="text-xl font-bold text-green-600"
+                    className="text-xl font-bold text-green-600 cursor-pointer"
                     onClick={() => dispatch(increaseQty(info.id))}
                   >
                     +
@@ -131,7 +131,7 @@ const ItemList = ({ items, isCart }: ItemListProps) => {
                   className={`
                     mt-2 w-24 h-9 rounded-lg text-sm font-semibold
                     border border-green-600 flex items-center justify-center 
-                    transition-all duration-200
+                    transition-all duration-200 cursor-pointer
                     ${isAdded ? "bg-green-600 text-white" : "bg-white text-green-600"}
                   `}
                   onClick={() => handleAddItem(item)}
