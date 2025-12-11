@@ -17,6 +17,9 @@ const RestaurantCard = ({ resData }: RestaurantCardProps) => {
     sla
   } = resData?.info ?? {};
 
+
+const numericCost = parseInt(String(costForTwo).replace(/[^\d]/g, ""), 10) || 0;
+
   const deliveryTime = sla?.deliveryTime;
 
   return (
@@ -26,7 +29,7 @@ const RestaurantCard = ({ resData }: RestaurantCardProps) => {
           bg-white 
           rounded-xl 
           shadow-md 
-          p-4 
+          p-4
           hover:shadow-xl 
           hover:scale-[1.02] 
           transition 
@@ -51,13 +54,14 @@ const RestaurantCard = ({ resData }: RestaurantCardProps) => {
           {cuisines?.join(", ") ?? "N/A"}
         </h4>
 
-        {/* RATINGS */}
+        {/* RATINGS + COST */}
         <div className="flex items-center justify-between mt-2 text-sm text-gray-700">
           <span className="font-medium">
             ⭐ {avgRating || "N/A"}
           </span>
 
-          <span>₹{(costForTwo || 0) / 100} FOR TWO</span>
+          {/* ✅ FIXED COST DISPLAY */}
+          <span>₹{numericCost} FOR TWO</span>
         </div>
 
         {/* DELIVERY TIME */}

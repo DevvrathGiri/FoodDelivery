@@ -39,7 +39,7 @@ const Cart = () => {
         )}
 
         {/* Cart Items */}
-        <ItemList items={cartItems} />
+        <ItemList items={cartItems} isCart={true} />
       </div>
     </div>
   );
